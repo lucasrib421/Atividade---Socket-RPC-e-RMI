@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package fila;
+
+option java_multiple_files = true;
+option java_package = "fila.rpc";
+option java_outer_classname = "FilaProtocolo";
+
+service FilaAtendimentoService {
+  rpc EntrarNaFila (EntrarNaFilaRequest) returns (ConsultaResponse);
+  rpc ConsultarPosicao (ConsultarPosicaoRequest) returns (ConsultaResponse);
+  rpc ChamarProximo (ChamarProximoRequest) returns (ConsultaResponse);
+  rpc FinalizarAtendimento (FinalizarAtendimentoRequest) returns (ConsultaResponse);
+}
+
+message EntrarNaFilaRequest {
+  string nome = 1;
+}
+
+message ConsultarPosicaoRequest {
+  int32 senha = 1;
+}
+
+message ChamarProximoRequest {}
+
+message FinalizarAtendimentoRequest {
+  int32 senha = 1;
+}
+
+message ConsultaResponse {
+  int32 senha = 1;
+  string nome = 2;
+  Estado estado = 3;
+  optional int32 posicao = 4;
+}
+
+enum Estado {
+  ESTADO_NAO_DEFINIDO = 0;
+  AGUARDANDO = 1;
+  EM_ATENDIMENTO = 2;
+  FINALIZADO = 3;
+}
